@@ -1,4 +1,4 @@
-# Outro Nível Educação
+# Outro Nível Literatura
 
 Plataforma educacional gamificada para crianças de 6 a 12 anos. O aluno escolhe uma categoria, estuda o conteúdo da lição, responde um quiz e ganha XP, sobe de nível e desbloqueia novas lições.
 
