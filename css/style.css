@@ -6,6 +6,8 @@
     --bg-light: #f0f4ff;
     --text-dark: #1f1d2b;
     --white: #ffffff;
+    --pink: #ff6b9d;
+    --purple-soft: #e8e4ff;
 }
 
 * {
@@ -32,7 +34,101 @@ body {
     z-index: -1;
 }
 
-/* Navbar */
+/* ===== AGE SELECTION SCREEN ===== */
+.age-select-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+}
+
+.age-select-screen h1 {
+    font-size: 2.5rem;
+    color: var(--p-color);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.age-select-screen p {
+    color: #666;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.age-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.age-card {
+    background: var(--white);
+    border-radius: 30px;
+    padding: 35px 25px;
+    text-align: center;
+    cursor: pointer;
+    border: 3px solid #eee;
+    box-shadow: 0 10px 0px #eee;
+    transition: all 0.2s;
+}
+
+.age-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 0px #e0e0e0;
+}
+
+.age-card:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0px #eee;
+}
+
+.age-card .age-emoji {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.age-card h2 {
+    color: var(--p-color);
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.age-card .age-range {
+    background: var(--purple-soft);
+    color: var(--p-color);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.age-card p {
+    color: #888;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.age-card.infantil {
+    border-bottom: 6px solid #00d68f;
+}
+
+.age-card.infantojuvenil {
+    border-bottom: 6px solid #ffbd12;
+}
+
+.age-card.preadolescente {
+    border-bottom: 6px solid #ff5263;
+}
+
+/* ===== NAVBAR ===== */
 .navbar {
     background: var(--white);
     padding: 12px 25px;
@@ -43,7 +139,6 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    max-height: 70px;
 }
 
 .profile-info {
@@ -66,6 +161,30 @@ body {
     font-weight: 700;
     color: var(--p-color);
     font-size: 0.9rem;
+}
+
+.age-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+.age-badge.infantil {
+    background: #d0fff2;
+    color: #00a36c;
+}
+
+.age-badge.infantojuvenil {
+    background: #fff5cc;
+    color: #b38600;
+}
+
+.age-badge.preadolescente {
+    background: #ffe0e4;
+    color: #c0002d;
 }
 
 .xp-container {
@@ -107,7 +226,23 @@ body {
     font-size: 0.9rem;
 }
 
-/* Container */
+.btn-change-age {
+    background: var(--purple-soft);
+    color: var(--p-color);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-change-age:hover {
+    background: #d0c8ff;
+}
+
+/* ===== CONTAINER / SCREENS ===== */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -144,13 +279,33 @@ body {
     color: var(--p-color);
 }
 
-/* Grid de Categorias - 4 COLUNAS */
+.hero p {
+    color: #666;
+    margin-top: 8px;
+}
+
+/* ===== MARCH BANNER ===== */
+.march-banner {
+    background: linear-gradient(135deg, #ff6b9d, #c94b87);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 6px 0px #a33870;
+}
+
+/* ===== CATEGORY GRID ===== */
 .grid-categories {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
 }
 
 .card-cat {
@@ -185,7 +340,21 @@ body {
     margin-bottom: 10px;
 }
 
-/* Lições */
+.card-cat p {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.card-cat.feminist {
+    border-color: #ffcce0;
+    box-shadow: 0 10px 0px #ffcce0;
+}
+
+.card-cat.feminist:hover {
+    box-shadow: 0 15px 0px #f0a0c0;
+}
+
+/* ===== LESSONS ===== */
 .lesson-list {
     display: grid;
     gap: 15px;
@@ -218,10 +387,12 @@ body {
 }
 
 .lesson-item.completed {
-    opacity: 0.7;
-    background: #f0f4ff;
+    opacity: 0.75;
+    background: #f0fff8;
+    border-color: #b0f0d8;
 }
 
+/* ===== BUTTONS ===== */
 .btn-circle-back {
     background: var(--white);
     border: 2px solid #eee;
@@ -244,7 +415,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* Conteúdo */
+/* ===== CONTENT ===== */
 .content-card {
     background: var(--white);
     padding: 30px;
@@ -281,7 +452,21 @@ body {
     border-left: 4px solid var(--success);
 }
 
-/* Quiz */
+.content-card .author-highlight {
+    background: linear-gradient(135deg, #fff0f6, #ffe4f0);
+    border-left: 4px solid var(--pink);
+    padding: 12px 15px;
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+.content-card .author-name {
+    font-weight: 700;
+    color: #c0006a;
+    font-size: 1.05rem;
+}
+
+/* ===== QUIZ ===== */
 .quiz-header {
     display: flex;
     align-items: center;
@@ -356,7 +541,7 @@ body {
     box-shadow: 0 5px 0px #d94150;
 }
 
-/* Resultado */
+/* ===== RESULT ===== */
 .result-card {
     background: var(--white);
     padding: 50px 40px;
@@ -419,6 +604,7 @@ body {
     gap: 15px;
     margin: 25px 0;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .reward-badge {
@@ -430,7 +616,6 @@ body {
     font-size: 1.1rem;
 }
 
-/* Botões */
 .btn-play {
     background: var(--success);
     color: white;
@@ -451,57 +636,158 @@ body {
     box-shadow: 0 3px 0px #00a36c;
 }
 
-/* Responsivo */
-@media (max-width: 1200px) {
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1000px) {
     .grid-categories {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 900px) {
-    .grid-categories {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+@media (max-width: 700px) {
 
-@media (max-width: 600px) {
+    /* NAVBAR: nunca quebra linha, tudo numa row compacta */
     .navbar {
-        padding: 10px 15px;
+        padding: 8px 10px;
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+
+    .profile-info {
+        flex: 1 1 0;
+        min-width: 0;
+        gap: 8px;
+        overflow: hidden;
     }
 
     .avatar {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+        border-radius: 8px;
+        flex-shrink: 0;
     }
 
-    .hero h1 {
-        font-size: 1.5rem;
+    .user-level {
+        font-size: 0.72rem;
+        white-space: nowrap;
     }
 
-    .grid-categories {
+    .age-badge {
+        display: none;
+    }
+
+    .xp-container {
+        width: 60px;
+    }
+
+    .xp-text {
+        font-size: 0.58rem;
+    }
+
+    .stats {
+        flex-shrink: 0;
+        gap: 5px;
+        flex-wrap: nowrap;
+    }
+
+    .stat-pill {
+        padding: 4px 7px;
+        font-size: 0.78rem;
+        gap: 3px;
+        border-radius: 14px;
+    }
+
+    .btn-change-age {
+        padding: 5px 8px;
+        font-size: 0.72rem;
+        white-space: nowrap;
+        border-radius: 10px;
+    }
+
+    /* AGE SELECTION */
+    .age-cards {
         grid-template-columns: 1fr;
     }
 
-    .card-cat .icon {
-        font-size: 3rem;
+    .age-select-screen h1 {
+        font-size: 1.8rem;
+    }
+
+    /* CATEGORIES */
+    .grid-categories {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
 
     .card-cat {
-        padding: 25px;
+        padding: 18px 12px;
+        border-radius: 20px;
     }
 
+    .card-cat .icon {
+        font-size: 2.6rem;
+        margin-bottom: 8px;
+    }
+
+    .card-cat h2 {
+        font-size: 0.95rem;
+    }
+
+    .card-cat p {
+        font-size: 0.78rem;
+    }
+
+    /* HERO */
+    .hero {
+        margin: 15px 0;
+    }
+
+    .hero h1 {
+        font-size: 1.35rem;
+    }
+
+    /* MARCH BANNER */
+    .march-banner {
+        font-size: 0.82rem;
+        padding: 10px 12px;
+        border-radius: 14px;
+        gap: 6px;
+    }
+
+    /* CONTENT */
+    .content-card {
+        padding: 18px 14px;
+        border-radius: 18px;
+    }
+
+    .container {
+        padding: 14px;
+    }
+
+    /* QUIZ */
+    .quiz-card {
+        padding: 18px 14px;
+        border-radius: 18px;
+    }
+
+    .btn-option {
+        padding: 13px;
+        font-size: 0.92rem;
+        border-radius: 12px;
+    }
+
+    /* RESULT */
     .result-card {
-        padding: 30px 20px;
-        min-height: 400px;
+        padding: 28px 18px;
+        min-height: unset;
     }
 
     .result-emoji {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
 
     .result-card h1 {
-        font-size: 1.9rem;
+        font-size: 1.6rem;
     }
 
     .reward-row {
@@ -511,5 +797,6 @@ body {
 
     .reward-badge {
         width: 100%;
+        text-align: center;
     }
 }

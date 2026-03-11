@@ -1,133 +1,393 @@
-const APP_DATA = {
-    categories: [
-        { id: 'saude', name: 'Saúde', icon: '🍎', color: '#ff5263' },
-        { id: 'esportes', name: 'Esportes', icon: '⚽', color: '#6a5ae0' },
-        { id: 'educacao', name: 'Educação', icon: '📚', color: '#00d68f' },
-        { id: 'programacao', name: 'Programação', icon: '💻', color: '#ff6b9d' }
-    ],
-    lessons: {
-        saude: [
-            {
-                id: 's1', title: 'Higiene Diária', icon: '🧼', requiredLevel: 1,
-                content: `<h3>Por que Lavar as Mãos?</h3><p>Nossas mãos tocam em muitas coisas durante o dia e podem carregar germes invisíveis!</p><h3>Como Fazer:</h3><ul><li>Use água e sabão</li><li>Esfregue por 20 segundos</li><li>Lave antes das refeições</li></ul>`,
-                quiz: [
-                    { q: "Quando devemos lavar as mãos?", opts: ["Só de manhã", "Antes de comer", "Nunca", "Só à noite"], a: 1 },
-                    { q: "Por quanto tempo devemos esfregar as mãos?", opts: ["5 segundos", "20 segundos", "1 minuto", "Não precisa esfregar"], a: 1 },
-                    { q: "O que usamos para lavar as mãos?", opts: ["Só água", "Água e sabão", "Só sabão", "Refrigerante"], a: 1 }
-                ]
-            },
-            {
-                id: 's2', title: 'Alimentação Saudável', icon: '🥗', requiredLevel: 2,
-                content: `<h3>Comida é Energia!</h3><p>Nosso corpo precisa de nutrientes para funcionar bem, crescer e ter energia para brincar!</p><h3>Alimentos Importantes:</h3><ul><li>Frutas e vegetais</li><li>Grãos integrais</li><li>Proteínas</li></ul>`,
-                quiz: [
-                    { q: "O que nos dá energia para brincar?", opts: ["Apenas doces", "Alimentos saudáveis", "Refrigerante", "Nada"], a: 1 },
-                    { q: "Qual desses é um alimento saudável?", opts: ["Doces", "Maçã", "Sorvete", "Bala"], a: 1 },
-                    { q: "Por que precisamos comer frutas e vegetais?", opts: ["Só por diversão", "Para ter nutrientes", "Não precisamos", "Para ficar doente"], a: 1 }
-                ]
-            },
-            {
-                id: 's3', title: 'Sono e Descanso', icon: '😴', requiredLevel: 3,
-                content: `<h3>Por que Dormir é Importante?</h3><p>Durante o sono, nosso corpo descansa e se prepara para um novo dia cheio de aventuras!</p><h3>Benefícios:</h3><ul><li>Crescemos enquanto dormimos</li><li>Nosso cérebro organiza memórias</li><li>Acordamos com mais energia</li></ul>`,
-                quiz: [
-                    { q: "O que acontece quando dormimos bem?", opts: ["Ficamos cansados", "Crescemos e descansamos", "Nada", "Ficamos doentes"], a: 1 },
-                    { q: "O que nosso cérebro faz enquanto dormimos?", opts: ["Para de funcionar", "Organiza memórias", "Fica doente", "Não faz nada"], a: 1 },
-                    { q: "Como acordamos depois de uma boa noite de sono?", opts: ["Cansados", "Com energia", "Tristes", "Doentes"], a: 1 }
-                ]
-            }
+/* ============================================================
+       DATA: CONTEÚDO LITERÁRIO POR FAIXA ETÁRIA
+       ============================================================ */
+const APP_DATA_BY_AGE = {
+    infantil: {
+        greeting: "Olá, Pequeno Leitor! 📚",
+        banner: "🌸 Março é o Mês da Mulher: conheça escritoras incríveis!",
+        avatar: "🌱",
+        categories: [
+            { id: 'contos', name: 'Contos e Fábulas', icon: '🐺', color: '#ff5263' },
+            { id: 'poesia', name: 'Poesia', icon: '🎵', color: '#6a5ae0' },
+            { id: 'classicos', name: 'Clássicos Infantis', icon: '📖', color: '#00d68f' },
+            { id: 'escritoras', name: 'Escritoras do Brasil', icon: '✍️', color: '#ff6b9d', feminist: true }
         ],
-        esportes: [
-            {
-                id: 'e1', title: 'Futebol Básico', icon: '⚽', requiredLevel: 1,
-                content: `<h3>O Esporte Mais Popular!</h3><p>O futebol é jogado por milhões de pessoas ao redor do mundo!</p><h3>Regras Básicas:</h3><ul><li>Duas equipes de 11 jogadores</li><li>Marcar gols no gol adversário</li><li>Não pode usar as mãos (exceto o goleiro)</li></ul>`,
-                quiz: [
-                    { q: "Quantos jogadores tem cada time de futebol?", opts: ["5", "11", "7", "15"], a: 1 },
-                    { q: "Qual é o objetivo do futebol?", opts: ["Correr muito", "Marcar gols", "Usar as mãos", "Ficar parado"], a: 1 },
-                    { q: "Quem pode usar as mãos no futebol?", opts: ["Todos", "O goleiro", "Ninguém", "O técnico"], a: 1 }
-                ]
-            },
-            {
-                id: 'e2', title: 'Basquete para Iniciantes', icon: '🏀', requiredLevel: 2,
-                content: `<h3>Arremesso na Cesta!</h3><p>No basquete, o objetivo é acertar a bola na cesta do adversário!</p><h3>Como Jogar:</h3><ul><li>Quicar a bola ao se movimentar</li><li>Arremessar na cesta</li><li>Trabalho em equipe</li></ul>`,
-                quiz: [
-                    { q: "Como você se movimenta com a bola no basquete?", opts: ["Correndo com ela", "Quicando", "Chutando", "Arremessando"], a: 1 },
-                    { q: "Onde devemos acertar a bola no basquete?", opts: ["No chão", "Na cesta", "Na parede", "Em outro jogador"], a: 1 },
-                    { q: "O que é importante no basquete?", opts: ["Jogar sozinho", "Trabalho em equipe", "Usar os pés", "Não quicar a bola"], a: 1 }
-                ]
-            },
-            {
-                id: 'e3', title: 'Natação e Segurança', icon: '🏊', requiredLevel: 3,
-                content: `<h3>Nadando com Segurança!</h3><p>Nadar é ótimo exercício e muito divertido, mas sempre precisamos de segurança!</p><h3>Regras Importantes:</h3><ul><li>Sempre nade com supervisão</li><li>Use colete se não souber nadar</li><li>Respeite a profundidade</li></ul>`,
-                quiz: [
-                    { q: "Quando podemos nadar sozinhos?", opts: ["Sempre", "Nunca, precisamos supervisão", "Só de dia", "Quando quiser"], a: 1 },
-                    { q: "O que devemos usar se não sabemos nadar?", opts: ["Nada", "Colete salva-vidas", "Roupas pesadas", "Sapatos"], a: 1 },
-                    { q: "Por que a natação precisa de supervisão?", opts: ["Não precisa", "Por segurança", "Por diversão", "Para competir"], a: 1 }
-                ]
-            }
+        lessons: {
+            contos: [
+                {
+                    id: 'inf_c1', title: 'O que são Contos?', icon: '📜', requiredLevel: 1,
+                    content: `<h1>📜</h1><h2>Contos: Histórias Curtas e Mágicas!</h2><div style="text-align:left;margin-top:15px"><p>Um conto é uma história curta com começo, meio e fim. São ótimas para ler de uma vez só!</p><h3>Partes de um conto:</h3><ul><li>🌅 Início: apresenta os personagens e o lugar</li><li>😮 Conflito: algo acontece e cria um problema</li><li>🎉 Desfecho: o problema é resolvido (ou não!)</li></ul><h3>Tipos de conto:</h3><ul><li>🐺 Contos de fadas: com magia e encantamento</li><li>🦊 Fábulas: com animais que ensinam uma lição</li><li>👻 Contos de assombração: cheios de mistério</li></ul></div>`,
+                    quiz: [
+                        { q: "O que é um conto?", opts: ["Um livro enorme", "Uma história curta com começo, meio e fim", "Uma música", "Um poema longo"], a: 1 },
+                        { q: "O que é uma fábula?", opts: ["Uma história sem fim", "Um conto com animais que ensinam uma lição", "Um poema de amor", "Um livro de receitas"], a: 1 },
+                        { q: "Qual é a parte do conto em que o problema é resolvido?", opts: ["O início", "O conflito", "O desfecho", "O título"], a: 2 }
+                    ]
+                },
+                {
+                    id: 'inf_c2', title: 'Fábulas de Esopo', icon: '🦊', requiredLevel: 2,
+                    content: `<h1>🦊</h1><h2>Esopo: O Pai das Fábulas</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Esopo (séc. VI a.C.: Grécia Antiga)</span></div><p>Esopo foi um escravo grego que criou histórias com animais para ensinar lições de vida. Suas fábulas são contadas até hoje!</p><h3>Fábulas famosas:</h3><ul><li>🐢 A Lebre e a Tartaruga: devagar se vai longe</li><li>🍇 A Raposa e as Uvas: quem não pode, diz que não quer</li><li>🐺 O Pastorzinho Mentiroso: quem mente perde a confiança</li><li>🐜 A Cigarra e a Formiga: trabalhe hoje para amanhã</li></ul></div>`,
+                    quiz: [
+                        { q: "Quem foi Esopo?", opts: ["Um rei grego", "Um escravo grego que criou fábulas", "Um guerreiro romano", "Um deus grego"], a: 1 },
+                        { q: "Qual é a lição da fábula 'A Lebre e a Tartaruga'?", opts: ["Que lebres são melhores", "Que devagar se vai longe", "Que tartarugas são rápidas", "Que corridas são divertidas"], a: 1 },
+                        { q: "O que é a moral de uma fábula?", opts: ["O nome dos personagens", "A lição de vida que a história ensina", "O lugar onde passa", "O título do livro"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'inf_c3', title: 'Monteiro Lobato', icon: '🌳', requiredLevel: 3,
+                    content: `<h1>🌳</h1><h2>Monteiro Lobato: O Criador do Sítio do Picapau Amarelo</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Monteiro Lobato (1882–1948): Brasil</span></div><p>Monteiro Lobato foi o maior escritor infantil do Brasil. Ele criou o Sítio do Picapau Amarelo, um lugar mágico cheio de personagens inesquecíveis!</p><h3>Personagens do Sítio:</h3><ul><li>🌟 Narizinho e Pedrinho: as crianças curiosas</li><li>🪆 Emília: a boneca de pano falante e engraçada</li><li>🦒 Visconde de Sabugosa: cheio de conhecimento</li><li>👵 Dona Benta: a avó sábia que conta histórias</li></ul></div>`,
+                    quiz: [
+                        { q: "Quem criou o Sítio do Picapau Amarelo?", opts: ["Machado de Assis", "Monteiro Lobato", "Carlos Drummond", "Clarice Lispector"], a: 1 },
+                        { q: "Quem é Emília no Sítio do Picapau Amarelo?", opts: ["Uma menina", "A avó", "Uma boneca de pano falante", "Uma fada"], a: 2 },
+                        { q: "Monteiro Lobato foi importante porque:", opts: ["Escrevia só para adultos", "Criou a maior obra da literatura infantil brasileira", "Não gostava de crianças", "Só escrevia poesia"], a: 1 }
+                    ]
+                }
+            ],
+            poesia: [
+                {
+                    id: 'inf_p1', title: 'O que é Poesia?', icon: '🎵', requiredLevel: 1,
+                    content: `<h1>🎵</h1><h2>Poesia: Palavras que Cantam!</h2><div style="text-align:left;margin-top:15px"><p>A poesia é uma forma de escrever usando palavras que soam bonitas, com ritmo e rima!</p><h3>Elementos da poesia:</h3><ul><li>🎶 Ritmo: o "balanço" das palavras, como uma música</li><li>🔤 Rima: quando palavras terminam com o mesmo som</li><li>📝 Verso: cada linha do poema</li><li>📖 Estrofe: um grupo de versos</li></ul><h3>Exemplo de rima:</h3><ul><li>"O gato subiu no telhado / e ficou todo molhado"</li></ul></div>`,
+                    quiz: [
+                        { q: "O que é uma rima na poesia?", opts: ["Um erro de escrita", "Quando palavras terminam com o mesmo som", "Um tipo de pontuação", "Uma cor"], a: 1 },
+                        { q: "O que chamamos de 'verso' em um poema?", opts: ["O título", "Cada linha do poema", "O autor", "A moral"], a: 1 },
+                        { q: "O ritmo na poesia é parecido com:", opts: ["Uma receita", "Uma música", "Um mapa", "Uma equação"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'inf_p2', title: 'Vinícius de Moraes', icon: '🌹', requiredLevel: 2,
+                    content: `<h1>🌹</h1><h2>Vinícius de Moraes: O Poetinha</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Vinícius de Moraes (1913–1980): Brasil</span></div><p>Vinícius de Moraes foi um poeta e compositor brasileiro carinhosamente chamado de "O Poetinha". Ele escrevia poesias e músicas lindas!</p><h3>Obras famosas:</h3><ul><li>🐛 "A Arca de Noé": poemas para crianças com animais</li><li>🌺 "A Rosa de Hiroshima": poema sobre a paz</li><li>🎸 "Garota de Ipanema": uma das músicas mais tocadas do mundo</li></ul></div>`,
+                    quiz: [
+                        { q: "Como Vinícius de Moraes era chamado carinhosamente?", opts: ["O Grandão", "O Poetinha", "O Escritor", "O Cantor"], a: 1 },
+                        { q: "Qual livro de poemas infantis Vinícius escreveu?", opts: ["Iracema", "A Arca de Noé", "Dom Casmurro", "Sagarana"], a: 1 },
+                        { q: "Além de poeta, Vinícius de Moraes também era:", opts: ["Pintor", "Compositor musical", "Escultor", "Ator de teatro"], a: 1 }
+                    ]
+                }
+            ],
+            classicos: [
+                {
+                    id: 'inf_cl1', title: 'Contos de Hans Christian Andersen', icon: '❄️', requiredLevel: 1,
+                    content: `<h1>❄️</h1><h2>Andersen: O Contador de Histórias Tristes e Mágicas</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Hans Christian Andersen (1805–1875): Dinamarca</span></div><p>Hans Christian Andersen foi um escritor dinamarquês que criou contos mágicos e emocionantes lidos no mundo todo!</p><h3>Contos famosos:</h3><ul><li>❄️ A Rainha da Neve: aventura no gelo eterno</li><li>🦢 Os Cisnes Selvagens: amor e sacrifício</li><li>🌊 A Pequena Sereia: amor no fundo do mar</li><li>🎭 O Patinho Feio: quem parece diferente pode ser especial</li></ul></div>`,
+                    quiz: [
+                        { q: "De que país era Hans Christian Andersen?", opts: ["Brasil", "França", "Dinamarca", "Inglaterra"], a: 2 },
+                        { q: "Qual é a lição do conto 'O Patinho Feio'?", opts: ["Que patos são maus", "Quem parece diferente pode ser especial", "Que cisnes são feios", "Que a aparência não muda"], a: 1 },
+                        { q: "Qual personagem vive no fundo do mar nos contos de Andersen?", opts: ["A Rainha da Neve", "O Patinho", "A Pequena Sereia", "Cinderela"], a: 2 }
+                    ]
+                },
+                {
+                    id: 'inf_cl2', title: 'Irmãos Grimm', icon: '🏰', requiredLevel: 2,
+                    content: `<h1>🏰</h1><h2>Irmãos Grimm: Coletores de Contos de Fadas</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Jacob e Wilhelm Grimm (séc. XIX: Alemanha)</span></div><p>Os irmãos Grimm viajaram pela Alemanha ouvindo histórias antigas do povo e as escreveram para que não se perdessem!</p><h3>Contos coletados por eles:</h3><ul><li>👠 Cinderela: a moça do sapatinho de cristal</li><li>🍎 Branca de Neve: e os sete anões</li><li>🐺 Chapeuzinho Vermelho: cuidado com o lobo!</li><li>🏠 João e Maria: a casinha de doces</li></ul></div>`,
+                    quiz: [
+                        { q: "O que os Irmãos Grimm fizeram?", opts: ["Inventaram os contos de fadas", "Coletaram histórias antigas do povo e escreveram", "Pintaram ilustrações famosas", "Criaram o cinema"], a: 1 },
+                        { q: "Qual desses contos foi coletado pelos Irmãos Grimm?", opts: ["A Pequena Sereia", "Chapeuzinho Vermelho", "Pinóquio", "O Pequeno Príncipe"], a: 1 },
+                        { q: "Por que é importante preservar histórias antigas?", opts: ["Não é importante", "Para que não se percam e continuem sendo contadas", "Para ganhar dinheiro", "Para enganar crianças"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'inf_cl3', title: 'Machado de Assis', icon: '🎩', requiredLevel: 3,
+                    content: `<h1>🎩</h1><h2>Machado de Assis: O Maior Escritor do Brasil</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Machado de Assis (1839–1908): Rio de Janeiro, Brasil</span></div><p>Machado de Assis foi o maior escritor da literatura brasileira. Nasceu pobre, filho de um pintor negro, e se tornou um gênio das letras!</p><h3>Curiosidades:</h3><ul><li>Fundou a Academia Brasileira de Letras em 1897</li><li>Escreveu romances, contos e poesias</li><li>Seu estilo era cheio de ironia e inteligência</li><li>Superou a pobreza e o preconceito para se tornar famoso</li></ul></div>`,
+                    quiz: [
+                        { q: "Machado de Assis é considerado:", opts: ["Um escritor português", "O maior escritor da literatura brasileira", "Um músico famoso", "Um pintor célebre"], a: 1 },
+                        { q: "O que Machado de Assis fundou em 1897?", opts: ["O Museu Nacional", "A Academia Brasileira de Letras", "O Jornal do Brasil", "A Biblioteca Nacional"], a: 1 },
+                        { q: "Qual é uma característica do estilo de Machado de Assis?", opts: ["Histórias só de amor", "Ironia e inteligência", "Só poesia rimada", "Aventuras medievais"], a: 1 }
+                    ]
+                }
+            ],
+            escritoras: [
+                {
+                    id: 'inf_e1', title: 'Cora Coralina', icon: '🌸', requiredLevel: 1,
+                    content: `<h1>🌸</h1><h2>Cora Coralina: A Poetisa dos Becos</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Cora Coralina (1889–1985): Goiás, Brasil</span></div><p>Cora Coralina foi uma escritora e poetisa brasileira que nasceu em Goiás. Ela escrevia desde jovem, mas só publicou seu primeiro livro aos 76 anos!</p><h3>O que ela nos ensina:</h3><ul><li>Nunca é tarde para realizar seus sonhos</li><li>A vida simples tem muita poesia</li><li>Escrevia sobre mulheres, crianças e o cotidiano</li><li>Sua cidade natal, Goiás Velho, inspirava seus becos e histórias</li></ul></div>`,
+                    quiz: [
+                        { q: "Onde Cora Coralina nasceu?", opts: ["São Paulo", "Goiás", "Rio de Janeiro", "Bahia"], a: 1 },
+                        { q: "Com quantos anos ela publicou seu primeiro livro?", opts: ["Com 10 anos", "Com 20 anos", "Aos 76 anos", "Nunca publicou"], a: 2 },
+                        { q: "O que Cora nos ensina com sua história?", opts: ["Que só jovens podem escrever", "Nunca é tarde para realizar sonhos", "Que escrever é fácil demais", "Que só ricos publicam livros"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'inf_e2', title: 'Ruth Rocha', icon: '📚', requiredLevel: 2,
+                    content: `<h1>📚</h1><h2>Ruth Rocha: A Rainha da Literatura Infantil</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Ruth Rocha (1931–): São Paulo, Brasil</span></div><p>Ruth Rocha é uma das maiores escritoras infantis do Brasil! Seus livros ensinam valores como respeito, liberdade e amizade de forma divertida.</p><h3>Livros famosos:</h3><ul><li>🎪 "Marcelo, Marmelo, Martelo": brincadeiras com palavras</li><li>👑 "O Reizinho Mandão": sobre quem manda demais</li><li>📖 "Quando a Escola é de Vidro": sobre respeitar diferenças</li></ul></div>`,
+                    quiz: [
+                        { q: "Ruth Rocha é famosa por escrever para:", opts: ["Só adultos", "Crianças", "Só universitários", "Idosos"], a: 1 },
+                        { q: "Qual livro famoso Ruth Rocha escreveu?", opts: ["Dom Casmurro", "O Reizinho Mandão", "A Hora da Estrela", "Sagarana"], a: 1 },
+                        { q: "Quais valores os livros de Ruth Rocha ensinam?", opts: ["Ganância e vaidade", "Respeito, liberdade e amizade", "Egoísmo e raiva", "Competição e inveja"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'inf_e3', title: 'Ana Maria Machado', icon: '🦋', requiredLevel: 3,
+                    content: `<h1>🦋</h1><h2>Ana Maria Machado: Uma Viagem pela Imaginação</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Ana Maria Machado (1941–): Rio de Janeiro, Brasil</span></div><p>Ana Maria Machado é escritora, jornalista e acadêmica brasileira. Ganhou o prêmio mais importante da literatura infantil do mundo!</p><h3>Conquistas:</h3><ul><li>🏆 Prêmio Hans Christian Andersen: o "Nobel" da literatura infantil</li><li>📖 Mais de 100 livros publicados</li><li>Presidiu a Academia Brasileira de Letras</li><li>Seus livros foram traduzidos para mais de 20 idiomas</li></ul></div>`,
+                    quiz: [
+                        { q: "Qual prêmio Ana Maria Machado ganhou?", opts: ["Oscar", "Prêmio Hans Christian Andersen", "Grammy", "Bola de Ouro"], a: 1 },
+                        { q: "Esse prêmio é considerado o 'Nobel' de qual área?", opts: ["Ciências", "Literatura infantil", "Medicina", "Matemática"], a: 1 },
+                        { q: "Quantos livros Ana Maria Machado publicou aproximadamente?", opts: ["5 livros", "20 livros", "Mais de 100 livros", "Apenas 2 livros"], a: 2 }
+                    ]
+                }
+            ]
+        }
+    },
+
+    infantojuvenil: {
+        greeting: "Olá, Leitor! Que história te espera hoje? 📖",
+        banner: "🌸 Março é o Mês da Mulher: conheça escritoras incríveis!",
+        avatar: "📖",
+        categories: [
+            { id: 'generos', name: 'Gêneros Literários', icon: '📚', color: '#00d68f' },
+            { id: 'autores', name: 'Grandes Autores', icon: '🖊️', color: '#ffbd12' },
+            { id: 'movimentos', name: 'Movimentos Literários', icon: '🏛️', color: '#6a5ae0' },
+            { id: 'escritoras', name: 'Literatura Feminina', icon: '✍️', color: '#ff6b9d', feminist: true }
         ],
-        educacao: [
-            {
-                id: 'd1', title: 'O Sistema Solar', icon: '🌍', requiredLevel: 1,
-                content: `<h3>Nosso Lar no Espaço!</h3><p>A Terra faz parte do Sistema Solar, junto com outros 7 planetas que giram ao redor do Sol!</p><h3>Planetas:</h3><ul><li>Mercúrio, Vênus, Terra, Marte</li><li>Júpiter, Saturno, Urano, Netuno</li><li>O Sol é uma estrela</li></ul>`,
-                quiz: [
-                    { q: "Quantos planetas tem no Sistema Solar?", opts: ["5", "8", "10", "12"], a: 1 },
-                    { q: "O que é o Sol?", opts: ["Um planeta", "Uma estrela", "Uma lua", "Um meteoro"], a: 1 },
-                    { q: "Em qual planeta vivemos?", opts: ["Marte", "Terra", "Júpiter", "Vênus"], a: 1 }
-                ]
-            },
-            {
-                id: 'd2', title: 'Os Dinossauros', icon: '🦕', requiredLevel: 2,
-                content: `<h3>Gigantes do Passado!</h3><p>Os dinossauros viveram na Terra há milhões de anos atrás!</p><h3>Curiosidades:</h3><ul><li>Existiram por 165 milhões de anos</li><li>Alguns eram enormes, outros pequenos</li><li>Desapareceram há 65 milhões de anos</li></ul>`,
-                quiz: [
-                    { q: "Quando os dinossauros viveram?", opts: ["Ontem", "Há milhões de anos", "Semana passada", "Vivem hoje"], a: 1 },
-                    { q: "Os dinossauros ainda existem?", opts: ["Sim, em todo lugar", "Não, desapareceram", "Só na floresta", "Só no mar"], a: 1 },
-                    { q: "Como eram os dinossauros?", opts: ["Todos pequenos", "Alguns grandes, outros pequenos", "Todos iguais", "Todos voavam"], a: 1 }
-                ]
-            },
-            {
-                id: 'd3', title: 'O Ciclo da Água', icon: '💧', requiredLevel: 3,
-                content: `<h3>A Viagem da Água!</h3><p>A água está sempre viajando: dos oceanos para o céu e de volta!</p><h3>Etapas:</h3><ul><li>Evaporação: água vira vapor</li><li>Condensação: vapor vira nuvem</li><li>Precipitação: chuva cai</li></ul>`,
-                quiz: [
-                    { q: "O que faz a água evaporar?", opts: ["Frio", "Calor do sol", "Vento", "Nada"], a: 1 },
-                    { q: "O que acontece na condensação?", opts: ["Água vira gelo", "Vapor vira nuvem", "Chuva cai", "Nada acontece"], a: 1 },
-                    { q: "O que é precipitação?", opts: ["Água evaporando", "Sol brilhando", "Chuva caindo", "Vento soprando"], a: 1 }
-                ]
-            }
+        lessons: {
+            generos: [
+                {
+                    id: 'ij_g1', title: 'Prosa e Poesia', icon: '📝', requiredLevel: 1,
+                    content: `<h1>📝</h1><h2>As Duas Grandes Formas da Literatura</h2><div style="text-align:left;margin-top:15px"><p>Toda literatura pode ser dividida em dois grandes grupos: a prosa e a poesia.</p><h3>Prosa:</h3><ul><li>Texto escrito de forma contínua, como falamos</li><li>Inclui romances, contos, crônicas e novelas</li><li>Exemplo: "Era uma vez um rei que morava em um castelo..."</li></ul><h3>Poesia:</h3><ul><li>Organizada em versos e estrofes</li><li>Usa ritmo, rima e musicalidade</li><li>Pode expressar emoções de forma concentrada</li></ul></div>`,
+                    quiz: [
+                        { q: "Qual é a diferença entre prosa e poesia?", opts: ["Não há diferença", "Prosa é contínua; poesia é em versos e estrofes", "Prosa é mais curta", "Poesia é mais antiga"], a: 1 },
+                        { q: "Qual desses é um gênero em prosa?", opts: ["Soneto", "Romance", "Haiku", "Ode"], a: 1 },
+                        { q: "O que caracteriza a poesia?", opts: ["Sempre tem rima obrigatória", "Ritmo, versos e expressão de emoções concentrada", "É sempre longa", "Só trata de amor"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'ij_g2', title: 'Conto, Crônica e Romance', icon: '📖', requiredLevel: 2,
+                    content: `<h1>📖</h1><h2>Subgêneros da Prosa</h2><div style="text-align:left;margin-top:15px"><p>Dentro da prosa, existem vários tipos de texto com características bem diferentes!</p><h3>Conto:</h3><ul><li>História curta, um único conflito central</li><li>Poucos personagens</li></ul><h3>Crônica:</h3><ul><li>Texto curto sobre o cotidiano</li><li>Tom leve, reflexivo ou humorístico</li><li>Muito comum em jornais e revistas</li></ul><h3>Romance:</h3><ul><li>Narrativa longa e complexa</li><li>Muitos personagens e subtramas</li><li>Explora profundamente a psicologia dos personagens</li></ul></div>`,
+                    quiz: [
+                        { q: "Qual é a característica principal de um conto?", opts: ["É muito longo", "É curto, com um único conflito central", "Tem muitos personagens", "É sempre humorístico"], a: 1 },
+                        { q: "Onde é muito comum encontrar crônicas?", opts: ["Em enciclopédias", "Em jornais e revistas", "Em dicionários", "Em bulas de remédio"], a: 1 },
+                        { q: "O que diferencia o romance dos outros gêneros em prosa?", opts: ["É sempre mais bonito", "É longo, com muitos personagens e subtramas", "É sempre sobre amor", "Tem menos de 10 páginas"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'ij_g3', title: 'Literatura de Cordel', icon: '🪢', requiredLevel: 3,
+                    content: `<h1>🪢</h1><h2>Cordel: A Literatura do Povo Nordestino</h2><div style="text-align:left;margin-top:15px"><p>A literatura de cordel é uma tradição nordestina brasileira: histórias em versos rimados impressas em folhetos pendurados em cordas (cordéis) para vender nas feiras!</p><h3>Características do cordel:</h3><ul><li>Versos rimados e com métrica bem definida</li><li>Temas: amor, política, religião, heróis e vilões</li><li>Ilustrações feitas em xilogravura (gravura em madeira)</li><li>Forma de comunicação popular antes da internet</li></ul></div>`,
+                    quiz: [
+                        { q: "De onde vem a tradição da literatura de cordel?", opts: ["Do Sul do Brasil", "Do Nordeste brasileiro", "De Portugal", "Da Europa medieval"], a: 1 },
+                        { q: "Como os folhetos de cordel eram expostos para venda?", opts: ["Em vitrines de lojas", "Pendurados em cordas nas feiras", "Dentro de caixas", "Em bibliotecas"], a: 1 },
+                        { q: "Que tipo de ilustração é típica do cordel?", opts: ["Fotografia colorida", "Pintura a óleo", "Xilogravura", "Desenho digital"], a: 2 }
+                    ]
+                }
+            ],
+            autores: [
+                {
+                    id: 'ij_a1', title: 'Carlos Drummond de Andrade', icon: '💎', requiredLevel: 1,
+                    content: `<h1>💎</h1><h2>Drummond: O Poeta da Pedra no Caminho</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Carlos Drummond de Andrade (1902–1987): Minas Gerais</span></div><p>Carlos Drummond de Andrade é o maior poeta moderno do Brasil. Seu estilo mistura ironia, melancolia e amor com muita inteligência.</p><h3>Obras e curiosidades:</h3><ul><li>🪨 "No meio do caminho tinha uma pedra": seu poema mais famoso</li><li>Faz parte do Modernismo Brasileiro (2ª fase)</li><li>Escreveu sobre Minas Gerais, família e questões sociais</li><li>Trabalhou como jornalista e funcionário público</li></ul></div>`,
+                    quiz: [
+                        { q: "De qual estado brasileiro Carlos Drummond era?", opts: ["São Paulo", "Bahia", "Minas Gerais", "Rio Grande do Sul"], a: 2 },
+                        { q: "Qual é o poema mais famoso de Drummond?", opts: ["A Rosa de Hiroshima", "No meio do caminho tinha uma pedra", "Canção do Exílio", "I-Juca Pirama"], a: 1 },
+                        { q: "A qual movimento literário Drummond pertencia?", opts: ["Romantismo", "Barroco", "Modernismo Brasileiro", "Parnasianismo"], a: 2 }
+                    ]
+                },
+                {
+                    id: 'ij_a2', title: 'Guimarães Rosa', icon: '🌵', requiredLevel: 2,
+                    content: `<h1>🌵</h1><h2>Guimarães Rosa: O Criador do Sertão Literário</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">João Guimarães Rosa (1908–1967): Minas Gerais</span></div><p>Guimarães Rosa transformou a língua portuguesa ao criar palavras novas e misturar o falar do sertão mineiro com uma poesia única.</p><h3>Obra e estilo:</h3><ul><li>🌵 "Grande Sertão: Veredas": seu romance mais importante</li><li>Criou neologismos: palavras novas que ele mesmo inventou</li><li>O sertão de Minas Gerais é o cenário de quase tudo que escreveu</li><li>Era médico antes de se tornar escritor e diplomata</li></ul></div>`,
+                    quiz: [
+                        { q: "Qual é o romance mais famoso de Guimarães Rosa?", opts: ["Dom Casmurro", "Grande Sertão: Veredas", "O Cortiço", "Iracema"], a: 1 },
+                        { q: "O que Guimarães Rosa fazia com a língua portuguesa?", opts: ["Simplificava ao máximo", "Criava palavras novas e misturava o falar sertanejo", "Só usava palavras estrangeiras", "Escrevia sem pontuação"], a: 1 },
+                        { q: "Qual era a profissão de Guimarães Rosa antes de se tornar escritor?", opts: ["Professor", "Advogado", "Médico", "Engenheiro"], a: 2 }
+                    ]
+                },
+                {
+                    id: 'ij_a3', title: 'Graciliano Ramos', icon: '🏜️', requiredLevel: 3,
+                    content: `<h1>🏜️</h1><h2>Graciliano Ramos: A Voz dos Oprimidos</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Graciliano Ramos (1892–1953): Alagoas</span></div><p>Graciliano Ramos foi um escritor nordestino que denunciou a miséria, a seca e a opressão sofrida pelos trabalhadores pobres do sertão.</p><h3>Obras principais:</h3><ul><li>🐕 "Vidas Secas": família de retirantes e seu cachorro Baleia</li><li>🔗 "Memórias do Cárcere": sobre sua prisão durante a ditadura</li><li>Escrita seca, direta, sem adornos desnecessários</li><li>Foi preso pelo governo Vargas por ser comunista</li></ul></div>`,
+                    quiz: [
+                        { q: "Qual é o livro mais famoso de Graciliano Ramos?", opts: ["Grande Sertão: Veredas", "Vidas Secas", "Macunaíma", "Capitães da Areia"], a: 1 },
+                        { q: "Qual tema central aparece em 'Vidas Secas'?", opts: ["A riqueza da elite", "A miséria e a seca no sertão nordestino", "Aventuras no mar", "A vida na cidade grande"], a: 1 },
+                        { q: "Por que Graciliano Ramos foi preso?", opts: ["Por roubo", "Por ser opositor ao governo Vargas", "Por escrever um livro proibido", "Por dívidas"], a: 1 }
+                    ]
+                }
+            ],
+            movimentos: [
+                {
+                    id: 'ij_m1', title: 'Romantismo Brasileiro', icon: '🌺', requiredLevel: 1,
+                    content: `<h1>🌺</h1><h2>Romantismo: Sentimento e Pátria</h2><div style="text-align:left;margin-top:15px"><p>O Romantismo chegou ao Brasil por volta de 1836 e foi o primeiro grande movimento literário nacional após a independência!</p><h3>Características:</h3><ul><li>Valorização da natureza e dos sentimentos</li><li>Idealização da mulher amada</li><li>Indianismo: o índio como herói nacional</li><li>Sentimento de amor à pátria recém-independente</li></ul><h3>Autores:</h3><ul><li>José de Alencar: "O Guarani", "Iracema"</li><li>Gonçalves Dias: "Canção do Exílio"</li></ul></div>`,
+                    quiz: [
+                        { q: "Quando o Romantismo chegou ao Brasil?", opts: ["1500", "Por volta de 1836", "1922", "1964"], a: 1 },
+                        { q: "O que é o Indianismo no Romantismo brasileiro?", opts: ["Estudo dos índios da Índia", "O índio como herói nacional da literatura", "Um tipo de dança", "Uma religião"], a: 1 },
+                        { q: "Quem escreveu 'Iracema'?", opts: ["Machado de Assis", "Drummond", "José de Alencar", "Guimarães Rosa"], a: 2 }
+                    ]
+                },
+                {
+                    id: 'ij_m2', title: 'Modernismo: Semana de 22', icon: '🎨', requiredLevel: 2,
+                    content: `<h1>🎨</h1><h2>A Semana de Arte Moderna de 1922</h2><div style="text-align:left;margin-top:15px"><p>Em fevereiro de 1922, em São Paulo, artistas e escritores fizeram uma revolução na arte brasileira! Foi a Semana de Arte Moderna.</p><h3>O que mudou:</h3><ul><li>Fim das regras rígidas de escrita e poesia</li><li>Liberdade para criar sem rima obrigatória</li><li>Valorização do Brasil e da cultura popular</li><li>Humor, ironia e experimentação na escrita</li></ul><h3>Autores modernistas:</h3><ul><li>Mário de Andrade: "Macunaíma"</li><li>Oswald de Andrade: "Manifesto Antropófago"</li></ul></div>`,
+                    quiz: [
+                        { q: "Em que ano foi a Semana de Arte Moderna?", opts: ["1500", "1888", "1922", "1964"], a: 2 },
+                        { q: "O que o Modernismo trouxe para a literatura brasileira?", opts: ["Mais regras rígidas", "Liberdade criativa e valorização do Brasil", "Textos mais formais", "Fim da poesia"], a: 1 },
+                        { q: "Quem escreveu 'Macunaíma'?", opts: ["Guimarães Rosa", "Graciliano Ramos", "Mário de Andrade", "Machado de Assis"], a: 2 }
+                    ]
+                },
+                {
+                    id: 'ij_m3', title: 'Realismo e Naturalismo', icon: '🔍', requiredLevel: 3,
+                    content: `<h1>🔍</h1><h2>Realismo: O Retrato da Sociedade</h2><div style="text-align:left;margin-top:15px"><p>O Realismo surgiu como reação ao exagero sentimental do Romantismo. A proposta era retratar a realidade como ela é, com crítica social!</p><h3>Características:</h3><ul><li>Personagens complexos, com defeitos e virtudes</li><li>Crítica à burguesia, à Igreja e às instituições</li><li>Linguagem objetiva e precisa</li><li>Análise psicológica profunda</li></ul><h3>Machado de Assis</h3><ul><li>O maior realista brasileiro</li><li>"Dom Casmurro": Capitu traiu ou não traiu?</li><li>Ironia fina e inteligência afiada</li></ul></div>`,
+                    quiz: [
+                        { q: "Como o Realismo surgiu?", opts: ["Como continuação do Romantismo", "Como reação ao exagero sentimental do Romantismo", "Como cópia de movimentos franceses", "Por acidente"], a: 1 },
+                        { q: "Quem é o maior escritor realista brasileiro?", opts: ["Guimarães Rosa", "Drummond", "Machado de Assis", "Graciliano Ramos"], a: 2 },
+                        { q: "Qual é o grande mistério do romance 'Dom Casmurro'?", opts: ["Quem é o autor", "Se Capitu traiu ou não traiu Bentinho", "Onde a história se passa", "Como o livro termina"], a: 1 }
+                    ]
+                }
+            ],
+            escritoras: [
+                {
+                    id: 'ij_e1', title: 'Clarice Lispector', icon: '🌟', requiredLevel: 1,
+                    content: `<h1>🌟</h1><h2>Clarice Lispector: A Feiticeira das Palavras</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Clarice Lispector (1920–1977): nascida na Ucrânia</span></div><p>Clarice Lispector é uma das escritoras mais importantes do Brasil e do mundo. Escrevia mergulhando nos pensamentos e sentimentos mais profundos dos personagens.</p><h3>Obras e estilo:</h3><ul><li>"A Hora da Estrela": seu romance mais famoso</li><li>"A Maçã no Escuro": investigação do ser humano</li><li>Estilo intimista: a narrativa entra na mente dos personagens</li><li>Questionava o papel da mulher na sociedade</li></ul></div>`,
+                    quiz: [
+                        { q: "Onde Clarice Lispector nasceu?", opts: ["Brasil", "Portugal", "Ucrânia", "Argentina"], a: 2 },
+                        { q: "Como é chamado o estilo literário de Clarice Lispector?", opts: ["Romantismo puro", "Estilo intimista: que entra na mente dos personagens", "Literatura de cordel", "Naturalismo"], a: 1 },
+                        { q: "Qual é o romance mais famoso de Clarice Lispector?", opts: ["Dom Casmurro", "A Hora da Estrela", "O Cortiço", "Vidas Secas"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'ij_e2', title: 'Carolina Maria de Jesus', icon: '✊', requiredLevel: 2,
+                    content: `<h1>✊</h1><h2>Carolina Maria de Jesus: A Voz da Favela</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Carolina Maria de Jesus (1914–1977): Minas Gerais</span></div><p>Carolina era catadora de papel na favela do Canindé, em São Paulo. Em cadernos encontrados no lixo, escrevia sobre sua vida e seus sonhos.</p><h3>Sua história incrível:</h3><ul><li>"Quarto de Despejo" (1960): diário de vida na favela</li><li>Traduzido para mais de 40 idiomas</li><li>Primeira escritora negra com grande reconhecimento no Brasil</li><li>Mostrou ao mundo a realidade invisível da pobreza</li></ul></div>`,
+                    quiz: [
+                        { q: "Onde Carolina Maria de Jesus vivia quando escreveu seu livro?", opts: ["Em um apartamento", "Na favela do Canindé", "Em uma fazenda", "Em Portugal"], a: 1 },
+                        { q: "Em que ela escrevia suas histórias?", opts: ["Computador", "Cadernos que achava no lixo", "Papel especial de escritório", "Nas paredes"], a: 1 },
+                        { q: "Qual a importância de 'Quarto de Despejo'?", opts: ["Era apenas um diário pessoal", "Revelou ao mundo a vida invisível na pobreza", "Era uma história de ficção científica", "Era um livro técnico"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'ij_e3', title: 'Cecília Meireles', icon: '🎵', requiredLevel: 3,
+                    content: `<h1>🎵</h1><h2>Cecília Meireles: A Poetisa dos Sons e da Liberdade</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Cecília Meireles (1901–1964): Rio de Janeiro</span></div><p>Cecília Meireles foi uma das maiores poetas do Brasil. Sua poesia é musical, cheia de ritmo e imagens. Também foi educadora e jornalista comprometida.</p><h3>Obra e legado:</h3><ul><li>"Romanceiro da Inconfidência": épico histórico sobre Tiradentes</li><li>Poemas falam de liberdade, tempo, morte e saudade</li><li>Defendia a educação pública de qualidade para todas as crianças</li><li>Escreveu em jornais contra o analfabetismo no Brasil</li></ul></div>`,
+                    quiz: [
+                        { q: "Qual grande obra histórica Cecília Meireles escreveu?", opts: ["Quarto de Despejo", "Romanceiro da Inconfidência", "A Hora da Estrela", "Grande Sertão"], a: 1 },
+                        { q: "Quais temas aparecem nos poemas de Cecília?", opts: ["Só futebol e política", "Liberdade, tempo, morte e saudade", "Só amor romântico", "Apenas culinária"], a: 1 },
+                        { q: "Além de poetisa, pelo que Cecília Meireles lutou?", opts: ["Por melhores salários", "Pela educação pública de qualidade para todos", "Por direitos dos ricos", "Pelo fechamento das escolas"], a: 1 }
+                    ]
+                }
+            ]
+        }
+    },
+
+    preadolescente: {
+        greeting: "Bem-vindo, Leitor! Pronto para mergulhar fundo? 🔭",
+        banner: "🌸 Março é o Mês da Mulher: conheça escritoras incríveis!",
+        avatar: "🔭",
+        categories: [
+            { id: 'teoria', name: 'Teoria Literária', icon: '🔬', color: '#00d68f' },
+            { id: 'autores', name: 'Cânone Brasileiro', icon: '🏛️', color: '#ffbd12' },
+            { id: 'mundial', name: 'Literatura Mundial', icon: '🌎', color: '#6a5ae0' },
+            { id: 'escritoras', name: 'Literatura Feminista', icon: '✊', color: '#ff6b9d', feminist: true }
         ],
-        programacao: [
-            {
-                id: 'p1', title: 'O que é um Computador?', icon: '🖥️', requiredLevel: 1,
-                content: `<h3>Máquinas que Pensam!</h3><p>Computadores são máquinas especiais que seguem instruções muito rápido!</p><h3>Partes do Computador:</h3><ul><li>Teclado: para digitar</li><li>Mouse: para apontar e clicar</li><li>Tela: para ver as coisas</li><li>Cérebro (CPU): faz os cálculos</li></ul>`,
-                quiz: [
-                    { q: "O que usamos para digitar no computador?", opts: ["Mouse", "Teclado", "Tela", "Alto-falante"], a: 1 },
-                    { q: "Para que serve o mouse?", opts: ["Digitar", "Apontar e clicar", "Fazer som", "Nada"], a: 1 },
-                    { q: "O que é a CPU do computador?", opts: ["A tela", "O cérebro", "O mouse", "O teclado"], a: 1 }
-                ]
-            },
-            {
-                id: 'p2', title: 'Algoritmos e Programação', icon: '📝', requiredLevel: 2,
-                content: `<h3>Passo a Passo!</h3><p>Um algoritmo é como uma receita: uma lista de passos para fazer algo acontecer!</p><h3>Exemplo - Escovar os Dentes:</h3><ul><li>1. Pegar a escova e a pasta</li><li>2. Colocar pasta na escova</li><li>3. Escovar os dentes</li><li>4. Enxaguar a boca</li></ul><p>Programar é ensinar o computador a seguir passos assim!</p>`,
-                quiz: [
-                    { q: "O que é um algoritmo?", opts: ["Um jogo", "Uma lista de passos", "Um desenho", "Uma música"], a: 1 },
-                    { q: "O que significa programar?", opts: ["Jogar", "Ensinar o computador", "Assistir TV", "Dormir"], a: 1 },
-                    { q: "Um algoritmo é como uma:", opts: ["Bola", "Receita", "Cor", "Casa"], a: 1 }
-                ]
-            },
-            {
-                id: 'p3', title: 'Criando com Código', icon: '🎮', requiredLevel: 3,
-                content: `<h3>Você é um Criador!</h3><p>Com programação, você pode criar jogos, apps e muito mais!</p><h3>O que Criar:</h3><ul><li>Jogos divertidos</li><li>Animações coloridas</li><li>Histórias interativas</li><li>Aplicativos úteis</li></ul><p>Programar é criar mundos incríveis! 🌟</p>`,
-                quiz: [
-                    { q: "O que você pode criar com programação?", opts: ["Só jogos", "Jogos, apps e muito mais", "Nada", "Só desenhos"], a: 1 },
-                    { q: "Programação serve para:", opts: ["Só estudar", "Criar coisas incríveis", "Só trabalhar", "Nada"], a: 1 },
-                    { q: "Quem pode aprender a programar?", opts: ["Só adultos", "Qualquer pessoa", "Só professores", "Ninguém"], a: 1 }
-                ]
-            }
-        ]
+        lessons: {
+            teoria: [
+                {
+                    id: 'pa_t1', title: 'Narrador e Ponto de Vista', icon: '👁️', requiredLevel: 1,
+                    content: `<h1>👁️</h1><h2>Quem Conta a História?</h2><div style="text-align:left;margin-top:15px"><p>O narrador é a voz que conta a história. A escolha do narrador muda completamente como percebemos os acontecimentos!</p><h3>Tipos de narrador:</h3><ul><li>🙋 Narrador em 1ª pessoa: participa da história ("eu vi...")</li><li>👤 Narrador em 3ª pessoa onisciente: sabe tudo, inclusive os pensamentos dos personagens</li><li>👀 Narrador em 3ª pessoa observador: só descreve o que vê por fora</li></ul><p style="margin-top:10px">O narrador NÃO é o autor! O autor cria o narrador como um personagem.</p></div>`,
+                    quiz: [
+                        { q: "O que é o narrador em 1ª pessoa?", opts: ["Quem escreve o livro", "A voz que diz 'eu' e participa da história", "Um personagem secundário", "O vilão da história"], a: 1 },
+                        { q: "O narrador onisciente é aquele que:", opts: ["Só vê de fora", "Sabe tudo, inclusive os pensamentos dos personagens", "Está dentro da história", "Não sabe o que vai acontecer"], a: 1 },
+                        { q: "O narrador e o autor são a mesma pessoa?", opts: ["Sim, sempre", "Não: o autor cria o narrador como um personagem", "Às vezes sim, às vezes não", "Só em poesia"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'pa_t2', title: 'Intertextualidade', icon: '🕸️', requiredLevel: 2,
+                    content: `<h1>🕸️</h1><h2>Quando Textos Conversam Entre Si</h2><div style="text-align:left;margin-top:15px"><p>Intertextualidade é quando um texto faz referência, dialoga ou se inspira em outro texto. A literatura é uma grande conversa entre autores!</p><h3>Tipos de intertextualidade:</h3><ul><li>📌 Citação: reproduz trecho de outra obra</li><li>🎭 Paródia: imita para criticar ou fazer humor</li><li>🌿 Alusão: referência indireta a outra obra</li><li>🔄 Paráfrase: reescreve com outras palavras mantendo o sentido</li></ul><h3>Exemplo clássico:</h3><ul><li>Drummond aludiu a Gonçalves Dias em "Canção de Amor"</li></ul></div>`,
+                    quiz: [
+                        { q: "O que é intertextualidade?", opts: ["Um erro de escrita", "Quando um texto dialoga ou referencia outro texto", "Um tipo de pontuação", "O índice de um livro"], a: 1 },
+                        { q: "O que é uma paródia?", opts: ["Cópia idêntica de outro texto", "Imitação de um texto para criticar ou fazer humor", "Tradução de outro idioma", "Resumo de um livro"], a: 1 },
+                        { q: "Por que a intertextualidade é importante na literatura?", opts: ["Não é importante", "Mostra que a literatura é uma grande conversa entre autores ao longo do tempo", "Só serve para plagiar", "É usada para enganar leitores"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'pa_t3', title: 'Herói e Anti-Herói', icon: '⚔️', requiredLevel: 3,
+                    content: `<h1>⚔️</h1><h2>O Protagonista e Suas Contradições</h2><div style="text-align:left;margin-top:15px"><p>Na literatura moderna, o herói perfeito quase desapareceu. Os personagens hoje são complexos, cheios de defeitos e contradições.</p><h3>Herói clássico:</h3><ul><li>Corajoso, honesto, defende os fracos</li><li>Exemplos: Hércules, Robin Hood, super-heróis</li></ul><h3>Anti-herói:</h3><ul><li>Protagonista com defeitos morais, às vezes cruel ou covarde</li><li>Nos faz questionar o que é certo e errado</li><li>Exemplos literários: Bentinho (Dom Casmurro), Riobaldo (Grande Sertão)</li></ul></div>`,
+                    quiz: [
+                        { q: "O que é um anti-herói?", opts: ["O vilão da história", "O protagonista com defeitos morais e contradições", "Um personagem secundário", "O narrador da história"], a: 1 },
+                        { q: "Por que o anti-herói é importante na literatura?", opts: ["Não é importante", "Nos faz questionar o que é certo e errado", "Torna a leitura mais fácil", "Substitui o narrador"], a: 1 },
+                        { q: "Qual personagem de Machado de Assis pode ser considerado um anti-herói?", opts: ["Iracema", "Bentinho, o Dom Casmurro", "Macunaíma", "Riobaldo"], a: 1 }
+                    ]
+                }
+            ],
+            autores: [
+                {
+                    id: 'pa_a1', title: 'Euclides da Cunha', icon: '🌵', requiredLevel: 1,
+                    content: `<h1>🌵</h1><h2>Euclides da Cunha: O Repórter da Guerra</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Euclides da Cunha (1866–1909): Rio de Janeiro</span></div><p>Euclides da Cunha cobriu como jornalista a Guerra de Canudos (1896–1897) no sertão baiano e escreveu um dos livros mais importantes da literatura brasileira.</p><h3>Os Sertões (1902):</h3><ul><li>Mistura de jornalismo, literatura e ciência</li><li>Relato da destruição do arraial de Canudos pelo exército</li><li>Denúncia do abandono do sertanejo pelo Estado</li><li>Frase famosa: "O sertanejo é, antes de tudo, um forte"</li></ul></div>`,
+                    quiz: [
+                        { q: "O que Euclides da Cunha cobriu como jornalista?", opts: ["A abolição da escravatura", "A Guerra de Canudos", "A Semana de Arte Moderna", "A Independência do Brasil"], a: 1 },
+                        { q: "Qual é o livro mais famoso de Euclides da Cunha?", opts: ["Vidas Secas", "Os Sertões", "Dom Casmurro", "Macunaíma"], a: 1 },
+                        { q: "O que 'Os Sertões' denuncia?", opts: ["A corrupção na política", "O abandono do sertanejo pelo Estado brasileiro", "Os problemas das cidades", "A pobreza em Portugal"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'pa_a2', title: 'Lima Barreto', icon: '📰', requiredLevel: 2,
+                    content: `<h1>📰</h1><h2>Lima Barreto: O Maldito Genial</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Lima Barreto (1881–1922): Rio de Janeiro</span></div><p>Lima Barreto foi um escritor negro, pobre e suburbano que viveu no Rio de Janeiro do início do século XX. Sua obra denuncia o racismo, a exclusão social e o preconceito de classe.</p><h3>Obras e vida:</h3><ul><li>"Triste Fim de Policarpo Quaresma": sobre o nacionalismo ingênuo</li><li>"Clara dos Anjos": sobre o racismo e o assédio a mulheres negras</li><li>Nunca foi aceito na Academia Brasileira de Letras por ser negro e pobre</li><li>Viveu com alcoolismo e internações psiquiátricas</li></ul></div>`,
+                    quiz: [
+                        { q: "Quais temas Lima Barreto denunciava em sua obra?", opts: ["A riqueza do Brasil", "Racismo, exclusão social e preconceito de classe", "Aventuras medievais", "A vida no campo"], a: 1 },
+                        { q: "Por que Lima Barreto nunca entrou na Academia Brasileira de Letras?", opts: ["Nunca quis entrar", "Era rejeitado por ser negro e pobre", "Sua obra era ruim", "Morava no exterior"], a: 1 },
+                        { q: "Qual é um dos temas do livro 'Clara dos Anjos'?", opts: ["A vida da nobreza", "O racismo e o assédio a mulheres negras", "Aventuras no sertão", "A guerra de Canudos"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'pa_a3', title: 'Jorge Amado', icon: '🌴', requiredLevel: 3,
+                    content: `<h1>🌴</h1><h2>Jorge Amado: O Cantor da Bahia</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Jorge Amado (1912–2001): Bahia</span></div><p>Jorge Amado foi um dos escritores brasileiros mais lidos no mundo. Sua obra celebra a Bahia, o povo mestiço, a sensualidade e a resistência dos pobres.</p><h3>Obras famosas:</h3><ul><li>"Gabriela, Cravo e Canela": amor e tradição no interior baiano</li><li>"Capitães da Areia": meninos de rua em Salvador</li><li>"Dona Flor e seus Dois Maridos": humor e sensualidade</li><li>Traduzido para mais de 49 idiomas</li></ul></div>`,
+                    quiz: [
+                        { q: "De qual estado brasileiro era Jorge Amado?", opts: ["São Paulo", "Minas Gerais", "Bahia", "Rio de Janeiro"], a: 2 },
+                        { q: "Quais temas aparecem nas obras de Jorge Amado?", opts: ["Só ficção científica", "Bahia, povo mestiço, sensualidade e resistência dos pobres", "Apenas a elite brasileira", "Só histórias medievais"], a: 1 },
+                        { q: "Qual livro de Jorge Amado fala sobre meninos de rua em Salvador?", opts: ["Gabriela", "Tieta do Agreste", "Capitães da Areia", "Dona Flor"], a: 2 }
+                    ]
+                }
+            ],
+            mundial: [
+                {
+                    id: 'pa_m1', title: 'Shakespeare e o Teatro', icon: '🎭', requiredLevel: 1,
+                    content: `<h1>🎭</h1><h2>Shakespeare: O Gênio do Teatro Universal</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">William Shakespeare (1564–1616): Inglaterra</span></div><p>William Shakespeare é considerado o maior dramaturgo de todos os tempos. Suas peças exploram amor, traição, poder e ambição com uma profundidade que ainda nos toca hoje.</p><h3>Obras mais famosas:</h3><ul><li>💀 Hamlet: "Ser ou não ser, eis a questão"</li><li>🗡️ Romeu e Julieta: amor impossível e tragédia</li><li>👑 Macbeth: ambição que destrói</li><li>🌩️ Rei Lear: loucura e traição familiar</li></ul></div>`,
+                    quiz: [
+                        { q: "Por que Shakespeare é considerado o maior dramaturgo?", opts: ["Porque foi o primeiro a escrever peças", "Suas obras exploram emoções humanas universais que ainda nos tocam", "Porque escreveu o maior número de peças", "Porque era inglês"], a: 1 },
+                        { q: "O que é uma tragédia no teatro?", opts: ["Uma peça cômica", "Uma peça em que os personagens principais sofrem ou morrem", "Uma peça infantil", "Uma peça muito longa"], a: 1 },
+                        { q: "Qual peça de Shakespeare tem a frase 'Ser ou não ser'?", opts: ["Macbeth", "Romeu e Julieta", "Hamlet", "Rei Lear"], a: 2 }
+                    ]
+                },
+                {
+                    id: 'pa_m2', title: 'Realismo Mágico', icon: '✨', requiredLevel: 2,
+                    content: `<h1>✨</h1><h2>Realismo Mágico: Quando o Impossível é Normal</h2><div style="text-align:left;margin-top:15px"><p>O Realismo Mágico é um estilo literário em que elementos mágicos e sobrenaturais aparecem no mundo real sem causar espanto nos personagens.</p><h3>Características:</h3><ul><li>O impossível é tratado como algo comum e cotidiano</li><li>Forte relação com a cultura e história da América Latina</li><li>Crítica social e política disfarçada na fantasia</li></ul><h3>Autores fundamentais:</h3><ul><li>Gabriel García Márquez: "Cem Anos de Solidão"</li><li>Jorge Luis Borges: labirintos e espelhos</li><li>No Brasil: Guimarães Rosa e João Ubaldo Ribeiro</li></ul></div>`,
+                    quiz: [
+                        { q: "O que é o Realismo Mágico?", opts: ["Um filme de magia", "Estilo em que elementos mágicos coexistem com o real sem causar espanto", "Uma forma de poesia", "Um tipo de teatro"], a: 1 },
+                        { q: "Quem escreveu 'Cem Anos de Solidão'?", opts: ["Guimarães Rosa", "Gabriel García Márquez", "Jorge Amado", "Graciliano Ramos"], a: 1 },
+                        { q: "Por que o Realismo Mágico é ligado à América Latina?", opts: ["Porque surgiu no Brasil", "Pela forte relação com a cultura, história e contradições latino-americanas", "Porque só é escrito em espanhol", "Porque trata de piratas"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'pa_m3', title: 'Distopia na Literatura', icon: '🌑', requiredLevel: 3,
+                    content: `<h1>🌑</h1><h2>Distopia: O Futuro que Não Queremos</h2><div style="text-align:left;margin-top:15px"><p>A distopia é o oposto da utopia: imagina sociedades futuras onde o mundo deu muito errado, geralmente sob controle autoritário.</p><h3>Características:</h3><ul><li>Estado totalitário que controla os cidadãos</li><li>Supressão da liberdade individual e da informação</li><li>Personagem que questiona o sistema</li><li>Reflexo de medos e críticas da sociedade atual</li></ul><h3>Obras clássicas:</h3><ul><li>"1984" de George Orwell: vigilância total</li><li>"Admirável Mundo Novo" de Aldous Huxley</li><li>"O Conto da Aia" de Margaret Atwood: distopia feminista</li></ul></div>`,
+                    quiz: [
+                        { q: "O que é uma distopia?", opts: ["Uma sociedade perfeita do futuro", "Uma sociedade futura onde o mundo deu muito errado", "Um tipo de poesia moderna", "Uma história de amor futurista"], a: 1 },
+                        { q: "Quem escreveu '1984'?", opts: ["Aldous Huxley", "Margaret Atwood", "George Orwell", "Gabriel García Márquez"], a: 2 },
+                        { q: "Qual distopia é considerada feminista?", opts: ["1984", "Admirável Mundo Novo", "O Conto da Aia", "Fahrenheit 451"], a: 2 }
+                    ]
+                }
+            ],
+            escritoras: [
+                {
+                    id: 'pa_e1', title: 'Conceição Evaristo', icon: '✊', requiredLevel: 1,
+                    content: `<h1>✊</h1><h2>Conceição Evaristo: A Escrevivência</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Conceição Evaristo (1946–): Minas Gerais</span></div><p>Conceição Evaristo criou o conceito de "escrevivência": escrever a partir da própria vivência, especialmente das experiências de mulheres negras e periféricas no Brasil.</p><h3>Por que sua obra importa?</h3><ul><li>Dá voz a mulheres negras invisibilizadas pela literatura canônica</li><li>Mistura ficção com memórias reais e coletivas</li><li>"Ponciá Vicêncio" (2003): marco da literatura afro-brasileira</li><li>Candidatou-se à Academia Brasileira de Letras em 2018</li></ul></div>`,
+                    quiz: [
+                        { q: "O que é 'escrevivência', conceito criado por Conceição Evaristo?", opts: ["Escrever sobre ficção científica", "Escrever a partir da própria vivência, especialmente de mulheres negras", "Escrever só poesia", "Escrever sobre política eleitoral"], a: 1 },
+                        { q: "Qual é o foco central da obra de Conceição Evaristo?", opts: ["A nobreza europeia", "Mulheres negras e periféricas invisibilizadas", "A vida rural no Nordeste", "Aventuras marítimas do século XVI"], a: 1 },
+                        { q: "Qual é um de seus livros mais importantes?", opts: ["Dom Casmurro", "Ponciá Vicêncio", "Gabriela", "Grande Sertão: Veredas"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'pa_e2', title: 'Feminismo e Literatura', icon: '📚', requiredLevel: 2,
+                    content: `<h1>📚</h1><h2>Literatura e Feminismo: Uma União Histórica</h2><div style="text-align:left;margin-top:15px"><p>A literatura feminista questiona as desigualdades de gênero e luta por representação das mulheres como sujeitos: não apenas como objetos: nas narrativas.</p><h3>Marcos históricos:</h3><ul><li>"O Segundo Sexo" (1949): Simone de Beauvoir: "Não se nasce mulher, torna-se"</li><li>Virginia Woolf: "Um Tabelião Próprio": mulheres precisam de independência para criar</li><li>No Brasil: escritoras conquistaram espaço apesar de barreiras históricas</li><li>Hoje, mulheres são maioria de leitoras e escritoras no Brasil</li></ul></div>`,
+                    quiz: [
+                        { q: "O que a literatura feminista questiona?", opts: ["A culinária tradicional", "As desigualdades de gênero e a falta de representação feminina", "O esporte", "A política econômica"], a: 1 },
+                        { q: "Quem escreveu 'O Segundo Sexo' e a famosa frase sobre tornar-se mulher?", opts: ["Clarice Lispector", "Carolina de Jesus", "Simone de Beauvoir", "Virginia Woolf"], a: 2 },
+                        { q: "Sobre o que Virginia Woolf argumentou em 'Um Tabelião Próprio'?", opts: ["Que mulheres não devem escrever", "Que mulheres precisam de independência financeira para criar literatura", "Que homens escrevem melhor", "Que a poesia é superior à prosa"], a: 1 }
+                    ]
+                },
+                {
+                    id: 'pa_e3', title: 'Adélia Prado e a Poesia do Corpo', icon: '🌻', requiredLevel: 3,
+                    content: `<h1>🌻</h1><h2>Adélia Prado: O Sagrado no Cotidiano Feminino</h2><div style="text-align:left;margin-top:15px"><div class="author-highlight"><span class="author-name">Adélia Prado (1935–): Divinópolis, Minas Gerais</span></div><p>Adélia Prado é uma poetisa mineira que fundiu o sagrado, o feminino e o cotidiano doméstico de forma revolucionária na literatura brasileira.</p><h3>O que há de especial em sua poesia:</h3><ul><li>Celebra o corpo feminino com liberdade e sem pudor</li><li>Transforma tarefas domésticas em atos poéticos</li><li>Mistura religiosidade, sensualidade e humor numa voz única</li><li>Publicou seu primeiro livro aos 40 anos, com enorme repercussão</li></ul></div>`,
+                    quiz: [
+                        { q: "O que caracteriza a poesia de Adélia Prado?", opts: ["Só crítica política", "A fusão do sagrado, feminino e cotidiano doméstico", "Só violência e guerra", "Apenas aventura e ação"], a: 1 },
+                        { q: "De que forma Adélia Prado aborda o cotidiano doméstico?", opts: ["Como algo chato e sem valor", "Como atos poéticos cheios de significado", "Com ironia negativa", "Como trabalho forçado"], a: 1 },
+                        { q: "Quando ela publicou seu primeiro livro?", opts: ["Aos 15 anos", "Aos 25 anos", "Aos 40 anos", "Aos 70 anos"], a: 2 }
+                    ]
+                }
+            ]
+        }
     }
 };
 
 const XP_PER_LEVEL = [0, 100, 250, 450, 700, 1000, 1400, 1850, 2350, 2900, 3500];
 
 let state = {
+    ageGroup: null,
     hp: 5,
     xp: 0,
     level: 1,
@@ -140,126 +400,131 @@ let state = {
     lastHpRegenTime: Date.now()
 };
 
-function init() {
-    renderCategories();
+let currentData = null;
+
+function selectAge(group) {
+    state.ageGroup = group;
+    currentData = APP_DATA_BY_AGE[group];
+
     loadProgress();
+
+    document.getElementById('screen-age').classList.add('hidden');
+    document.getElementById('main-navbar').classList.remove('hidden');
+
+    const badge = document.getElementById('age-badge-display');
+    badge.className = 'age-badge ' + group;
+    const labels = { infantil: '🌱 6–8 anos', infantojuvenil: '📖 9–11 anos', preadolescente: '🔭 11–14 anos' };
+    badge.textContent = labels[group];
+
+    document.getElementById('navbar-avatar').textContent = currentData.avatar;
+    document.getElementById('hero-greeting').textContent = currentData.greeting;
+    document.getElementById('march-banner-text').textContent = currentData.banner;
+
+    renderCategories();
     updateUI();
+    showScreen('home');
     startHpRegeneration();
     startEnergyRegeneration();
 }
 
+function changeAge() {
+    saveProgress();
+    state = { ageGroup: null, hp: 5, xp: 0, level: 1, energy: 100, currentCat: null, currentLesson: null, quizStep: 0, correctCount: 0, completedLessons: [], lastHpRegenTime: Date.now() };
+    currentData = null;
+    document.getElementById('main-navbar').classList.add('hidden');
+    document.getElementById('screen-age').classList.remove('hidden');
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+}
+
 function updateUI() {
+    if (!currentData) return;
     document.getElementById('hearts-display').textContent = "❤️".repeat(state.hp) + "🖤".repeat(5 - state.hp);
     document.getElementById('energy-val').textContent = state.energy;
     document.getElementById('level-val').textContent = `Nível ${state.level}`;
     updateXPBar();
-
     if (state.hp <= 0) gameOver();
 }
 
 function updateXPBar() {
-    const currentLevel = state.level;
-    const xpForCurrentLevel = XP_PER_LEVEL[currentLevel - 1];
-    const xpForNextLevel = XP_PER_LEVEL[currentLevel];
-    const xpInCurrentLevel = state.xp - xpForCurrentLevel;
-    const xpNeededForLevel = xpForNextLevel - xpForCurrentLevel;
-
-    const percentage = (xpInCurrentLevel / xpNeededForLevel) * 100;
-
-    document.getElementById('xp-bar-fill').style.width = `${Math.min(percentage, 100)}%`;
-    document.getElementById('xp-text').textContent = `${xpInCurrentLevel}/${xpNeededForLevel} XP`;
+    const lvl = state.level;
+    const xpCurrent = XP_PER_LEVEL[lvl - 1] || 0;
+    const xpNext = XP_PER_LEVEL[lvl] || 9999;
+    const pct = ((state.xp - xpCurrent) / (xpNext - xpCurrent)) * 100;
+    document.getElementById('xp-bar-fill').style.width = Math.min(pct, 100) + '%';
+    document.getElementById('xp-text').textContent = `${state.xp - xpCurrent}/${xpNext - xpCurrent} XP`;
 }
 
 function calculateLevel(xp) {
     for (let i = XP_PER_LEVEL.length - 1; i >= 0; i--) {
-        if (xp >= XP_PER_LEVEL[i]) {
-            return i + 1;
-        }
+        if (xp >= XP_PER_LEVEL[i]) return i + 1;
     }
     return 1;
 }
 
 function renderCategories() {
     const grid = document.getElementById('cat-grid');
-    grid.innerHTML = APP_DATA.categories.map(c => `
-        <div class="card-cat" onclick="openCategory('${c.id}')" style="border-bottom: 5px solid ${c.color}">
-            <span class="icon">${c.icon}</span>
-            <h2>${c.name}</h2>
-            <p>Clique para explorar!</p>
-        </div>
-    `).join('');
+    grid.innerHTML = currentData.categories.map(c => `
+            <div class="card-cat ${c.feminist ? 'feminist' : ''}" onclick="openCategory('${c.id}')" style="border-bottom: 6px solid ${c.color}">
+                <span class="icon">${c.icon}</span>
+                <h2>${c.name}</h2>
+                <p>${c.feminist ? '🌸 Especial Mês da Mulher' : 'Clique para explorar!'}</p>
+            </div>
+        `).join('');
 }
 
 function openCategory(id) {
     state.currentCat = id;
-    const cat = APP_DATA.categories.find(c => c.id === id);
-    document.getElementById('lesson-cat-title').textContent = `Mundo: ${cat.name}`;
+    const cat = currentData.categories.find(c => c.id === id);
+    document.getElementById('lesson-cat-title').textContent = `${cat.icon} ${cat.name}`;
 
-    const container = document.getElementById('lesson-list-container');
-    container.innerHTML = APP_DATA.lessons[id].map(l => {
-        const isLocked = state.level < l.requiredLevel;
-        const isCompleted = state.completedLessons.includes(l.id);
-        const completedClass = isCompleted ? 'completed' : '';
-        const completedIcon = isCompleted ? ' ✓' : '';
-
-        return `
-            <div class="lesson-item ${isLocked ? 'locked' : ''} ${completedClass}" onclick="openLesson('${l.id}')">
-                <span>${l.icon} ${l.title}${completedIcon}</span>
-                <span>${isLocked ? '🔒 Nível ' + l.requiredLevel : '➔'}</span>
-            </div>
-        `;
+    const lessons = currentData.lessons[id] || [];
+    document.getElementById('lesson-list-container').innerHTML = lessons.map(l => {
+        const locked = state.level < l.requiredLevel;
+        const done = state.completedLessons.includes(l.id);
+        return `<div class="lesson-item ${locked ? 'locked' : ''} ${done ? 'completed' : ''}" onclick="openLesson('${l.id}')">
+                <span>${l.icon} ${l.title}${done ? ' ✓' : ''}</span>
+                <span>${locked ? '🔒 Nível ' + l.requiredLevel : (done ? '🏆' : '➔')}</span>
+            </div>`;
     }).join('');
 
     showScreen('lessons');
 }
 
 function openLesson(id) {
-    const lesson = APP_DATA.lessons[state.currentCat].find(l => l.id === id);
-
+    const lesson = currentData.lessons[state.currentCat].find(l => l.id === id);
     if (state.level < lesson.requiredLevel) {
         alert(`Esta lição requer Nível ${lesson.requiredLevel}. Continue estudando para desbloquear! 📚`);
         return;
     }
-
     state.currentLesson = lesson;
-    document.getElementById('content-body').innerHTML = `
-        <h1 style="font-size:2.5rem; margin-bottom:15px">${lesson.icon}</h1>
-        <h2>${lesson.title}</h2>
-        <div style="margin-top:20px; text-align:left">${lesson.content}</div>
-    `;
+    document.getElementById('content-body').innerHTML = lesson.content;
     showScreen('content');
 }
 
 function startQuiz() {
     state.quizStep = 0;
     state.correctCount = 0;
-    updateUI();
     showScreen('quiz');
     renderQuestion();
 }
 
 function renderQuestion() {
-    const lesson = state.currentLesson;
-    const q = lesson.quiz[state.quizStep];
-
-    document.getElementById('quiz-step-text').textContent = `${state.quizStep + 1}/${lesson.quiz.length}`;
-    document.getElementById('quiz-progress-bar').style.width = ((state.quizStep / lesson.quiz.length) * 100) + "%";
+    const q = state.currentLesson.quiz[state.quizStep];
+    const total = state.currentLesson.quiz.length;
+    document.getElementById('quiz-step-text').textContent = `${state.quizStep + 1}/${total}`;
+    document.getElementById('quiz-progress-bar').style.width = ((state.quizStep / total) * 100) + '%';
     document.getElementById('quiz-question').textContent = q.q;
-
-    const opts = document.getElementById('quiz-options');
-    opts.innerHTML = q.opts.map((o, i) => `
-        <button class="btn-option" onclick="handleAnswer(${i})">${o}</button>
-    `).join('');
+    document.getElementById('quiz-options').innerHTML = q.opts.map((o, i) =>
+        `<button class="btn-option" onclick="handleAnswer(${i})">${o}</button>`
+    ).join('');
 }
 
 function handleAnswer(idx) {
     const q = state.currentLesson.quiz[state.quizStep];
-    const isCorrect = idx === q.a;
+    const correct = idx === q.a;
     const btns = document.querySelectorAll('.btn-option');
-
     btns.forEach(b => b.disabled = true);
-
-    if (isCorrect) {
+    if (correct) {
         btns[idx].classList.add('correct');
         state.correctCount++;
         playSound('correct');
@@ -270,65 +535,50 @@ function handleAnswer(idx) {
         playSound('wrong');
         updateUI();
     }
-
     setTimeout(() => {
-        nextAction();
-    }, 1000);
-}
-
-function nextAction() {
-    state.quizStep++;
-
-    if (state.quizStep < state.currentLesson.quiz.length) {
-        renderQuestion();
-    } else {
-        finishLesson();
-    }
+        state.quizStep++;
+        if (state.quizStep < state.currentLesson.quiz.length) renderQuestion();
+        else finishLesson();
+    }, 1200);
 }
 
 function finishLesson() {
     const total = state.currentLesson.quiz.length;
-    const win = state.correctCount >= 2; // Precisa acertar pelo menos 2 de 3
-    const isFirstTime = !state.completedLessons.includes(state.currentLesson.id);
+    const minToPass = Math.ceil(total * 0.6);
+    const win = state.correctCount >= minToPass;
+    const firstTime = !state.completedLessons.includes(state.currentLesson.id);
 
     const oldLevel = state.level;
-    let xpGained = 0;
-    let heartsGained = 0;
+    let xpGained = 0, heartsGained = 0;
 
-    if (win && isFirstTime) {
+    if (win && firstTime) {
         xpGained = state.correctCount * 50;
         state.xp += xpGained;
-
-        heartsGained = state.correctCount;
+        heartsGained = Math.min(state.correctCount, 5 - state.hp);
         state.hp = Math.min(5, state.hp + heartsGained);
-
         state.completedLessons.push(state.currentLesson.id);
     }
 
-    const newLevel = calculateLevel(state.xp);
-    const leveledUp = newLevel > oldLevel;
-    state.level = newLevel;
+    state.level = calculateLevel(state.xp);
+    const leveledUp = state.level > oldLevel;
 
     document.getElementById('result-icon').textContent = win ? "🏆" : "💪";
     document.getElementById('result-title').textContent = win ? "Missão Cumprida!" : "Continue Tentando!";
 
-    let resultDesc = `Você acertou ${state.correctCount} de ${total} perguntas.`;
-    if (win && !isFirstTime) {
-        resultDesc += " (Lição já completada - sem recompensas)";
-    } else if (!win) {
-        resultDesc += " Precisa acertar pelo menos 2 para passar!";
-    }
-    document.getElementById('result-desc').textContent = resultDesc;
+    let desc = `Você acertou ${state.correctCount} de ${total} perguntas.`;
+    if (!win) desc += ` Acerte pelo menos ${minToPass} para passar!`;
+    if (win && !firstTime) desc += " (Já completada: sem recompensas extras)";
+    document.getElementById('result-desc').textContent = desc;
 
     document.getElementById('xp-gain').textContent = xpGained;
     document.getElementById('hp-gain').textContent = heartsGained;
 
-    const levelUpBox = document.getElementById('level-up-box');
+    const lvlBox = document.getElementById('level-up-box');
     if (leveledUp) {
-        document.getElementById('new-level').textContent = `Nível ${newLevel}`;
-        levelUpBox.classList.remove('hidden');
+        document.getElementById('new-level').textContent = `Nível ${state.level}`;
+        lvlBox.classList.remove('hidden');
     } else {
-        levelUpBox.classList.add('hidden');
+        lvlBox.classList.add('hidden');
     }
 
     saveProgress();
@@ -343,96 +593,83 @@ function showScreen(name) {
 }
 
 function gameOver() {
-    alert("Suas vidas acabaram! Aguarde a regeneração de vida para continuar jogando. ⏰");
+    alert("Suas vidas acabaram! Aguarde a regeneração para continuar. ⏰");
     showScreen('home');
 }
 
 function playSound(type) {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    if (type === 'correct') {
-        osc.frequency.setValueAtTime(500, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1000, ctx.currentTime + 0.1);
-    } else {
-        osc.frequency.setValueAtTime(300, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.2);
-    }
-
-    gain.gain.setValueAtTime(0.1, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.2);
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        if (type === 'correct') {
+            osc.frequency.setValueAtTime(500, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1000, ctx.currentTime + 0.1);
+        } else {
+            osc.frequency.setValueAtTime(300, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.2);
+        }
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
+    } catch (e) { }
 }
 
 function saveProgress() {
-    const saveData = {
-        xp: state.xp,
-        level: state.level,
-        hp: state.hp,
-        energy: state.energy,
-        completedLessons: state.completedLessons,
+    if (!state.ageGroup) return;
+    const key = 'outronivel_' + state.ageGroup;
+    localStorage.setItem(key, JSON.stringify({
+        xp: state.xp, level: state.level, hp: state.hp,
+        energy: state.energy, completedLessons: state.completedLessons,
         lastHpRegenTime: state.lastHpRegenTime
-    };
-    localStorage.setItem('educube_state', JSON.stringify(saveData));
+    }));
 }
 
 function loadProgress() {
-    const saved = localStorage.getItem('educube_state');
+    const key = 'outronivel_' + state.ageGroup;
+    const saved = localStorage.getItem(key);
     if (saved) {
-        const data = JSON.parse(saved);
-        state.xp = data.xp || 0;
-        state.level = data.level || 1;
-        state.hp = data.hp || 5;
-        state.energy = data.energy || 100;
-        state.completedLessons = data.completedLessons || [];
-        state.lastHpRegenTime = data.lastHpRegenTime || Date.now();
-
-        regenerateHpFromOfflineTime();
+        const d = JSON.parse(saved);
+        state.xp = d.xp || 0;
+        state.level = d.level || 1;
+        state.hp = d.hp || 5;
+        state.energy = d.energy || 100;
+        state.completedLessons = d.completedLessons || [];
+        state.lastHpRegenTime = d.lastHpRegenTime || Date.now();
+        const timePassed = Date.now() - state.lastHpRegenTime;
+        const hpToRegen = Math.floor(timePassed / 3600000);
+        if (hpToRegen > 0 && state.hp < 5) {
+            state.hp = Math.min(5, state.hp + hpToRegen);
+            state.lastHpRegenTime = Date.now();
+        }
     }
 }
 
-function regenerateHpFromOfflineTime() {
-    const now = Date.now();
-    const timePassed = now - state.lastHpRegenTime;
-    const hoursPassedTotal = timePassed / (1000 * 60 * 60);
-    const hpToRegenerate = Math.floor(hoursPassedTotal);
-
-    if (hpToRegenerate > 0 && state.hp < 5) {
-        state.hp = Math.min(5, state.hp + hpToRegenerate);
-        state.lastHpRegenTime = now;
-        saveProgress();
-    }
-}
+let hpInterval, energyInterval;
 
 function startHpRegeneration() {
-    setInterval(() => {
+    clearInterval(hpInterval);
+    hpInterval = setInterval(() => {
         if (state.hp < 5) {
             const now = Date.now();
-            const timeSinceLastRegen = now - state.lastHpRegenTime;
-            const hourInMs = 1000 * 60 * 60;
-
-            if (timeSinceLastRegen >= hourInMs) {
+            if (now - state.lastHpRegenTime >= 3600000) {
                 state.hp = Math.min(5, state.hp + 1);
                 state.lastHpRegenTime = now;
-                updateUI();
-                saveProgress();
+                updateUI(); saveProgress();
             }
         }
     }, 60000);
 }
 
 function startEnergyRegeneration() {
-    setInterval(() => {
+    clearInterval(energyInterval);
+    energyInterval = setInterval(() => {
         if (state.energy < 100) {
             state.energy = Math.min(100, state.energy + 1);
-            updateUI();
-            saveProgress();
+            updateUI(); saveProgress();
         }
     }, 60000);
 }
-
-init();
